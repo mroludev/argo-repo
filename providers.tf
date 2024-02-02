@@ -70,12 +70,18 @@ provider "null" {
 
 
 provider "kubernetes" {
-   config_path = file("~/.kube/config")
+  config_path = file("/home/ubuntu/.kube/config")
+  host                   = local.host
+  token                  = local.decoded_token
+  cluster_ca_certificate = local.decoded_certificate
+  client_certificate     = local.decoded_certificate
+  client_key             = local.decoded_client_key
+  
 }
 
 provider "kubectl" {
-  config_path = file("~/.kube/config")
-  context     = "kubernetes-admin@kubernetes"
+  config_path = file("/home/ubuntu/.kube/config")
+  
   load_config_file       = false
 }
 
@@ -87,10 +93,17 @@ provider "helm" {
   client_certificate     = local.decoded_certificate
   client_key             = local.decoded_client_key
 }
+
+
 locals {
-  host = data.kubectl_config.current.current_context.0.cluster.0.cluster.server
-}
-output "host" {
-  value = local.host
+  host        = "https://192.168.64.12:6443"
+  certificate = file("/home/ubuntu/k8scert/ca.crt")
+  token       = file("/home/ubuntu/k8scert/token.txt")
+  client_key  = file("/home/ubuntu/k8scert/client_key.txt")
+
+  decoded_certificate = base64decode(local.certificate)
+  decoded_token       = base64decode(local.token)
+  decoded_client_key  = base64decode(local.client_key)
+  load_config_file       = false
 }
 
