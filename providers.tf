@@ -82,7 +82,7 @@ provider "kubernetes" {
 provider "kubectl" {
   config_path = file("/home/ubuntu/.kube/config")
   
-  load_config_file       = false
+  load_config_file       = true
 }
 
 
@@ -104,6 +104,6 @@ locals {
   decoded_certificate = base64decode(local.certificate)
   decoded_token       = base64decode(local.token)
   decoded_client_key  = base64decode(local.client_key)
-  load_config_file       = false
+  load_config_file       = true
 }
 
