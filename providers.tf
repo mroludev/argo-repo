@@ -67,20 +67,19 @@ provider "null" {
   # A null provider does nothing, it is used here to avoid errors related to missing providers.
 }
 
+
+provider "null" {
+  # A null provider does nothing, it is used here to avoid errors related to missing providers.
+}
+
 provider "kubernetes" {
-  host                   = local.host
-  token                  = local.decoded_token
-  cluster_ca_certificate = local.decoded_certificate
-  client_certificate     = local.decoded_certificate
-  client_key             = local.decoded_client_key
+   config_path = file("~/.kube/config")
 }
 
 provider "kubectl" {
-  host                   = local.host
-  cluster_ca_certificate = local.certificate
-  token                  = local.token
-  load_config_file       = false
+  config_path = file("~/.kube/config")
 }
+
 
 provider "helm" {
   host                   = local.host
@@ -91,13 +90,13 @@ provider "helm" {
 }
 
 locals {
-  host        = "192.168.64.12"
-  certificate = "/k8scert/ca.crt"
-  token       = "/k8scert/token.txt"
-  client_key  = "/k8scert/client_key.txt"
+  host        = "https://192.168.64.12:6443"
+  certificate = file("/home/ubuntu/k8scert/ca.crt")
+  token       = file("/home/ubuntu/k8scert/token.txt")
+  client_key  = file("/home/ubuntu/k8scert/client_key.txt")
 
-  decoded_certificate = base64decode(file(local.certificate))
-  decoded_token       = base64decode(file(local.token))
-  decoded_client_key  = base64decode(file(local.client_key))
+  decoded_certificate = base64decode(local.certificate)
+  decoded_token       = base64decode(local.token)
+  decoded_client_key  = base64decode(local.client_key)
 }
 

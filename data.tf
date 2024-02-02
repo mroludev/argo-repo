@@ -1,20 +1,20 @@
 # Cluster data
-# data "aws_eks_cluster" "cluster" {
+#data "aws_eks_cluster" "cluster" {
 #   name = "kubernetes-admin@kubernetes"
 # }
 
 # data "aws_eks_cluster_auth" "cluster" {
 #   name = "kubernetes-admin@kubernetes"
-# }
+#}
 
 # Namespace
 data "kubectl_file_documents" "namespace" {
-  content = file("${path.module}/manifests/namespace.yaml")
+  content = file("/home/ubuntu/argo-repo/manifests/namespace.yaml")
 }
 
 # Argo CRD installation
 data "kubectl_file_documents" "argocd" {
-  content = file("${path.module}/manifests/install.yaml")
+  content = file("/home/ubuntu/argo-repo/manifests/install.yaml")
 }
 
 # Argo svc
