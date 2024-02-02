@@ -1,11 +1,11 @@
 # Cluster data
-data "aws_eks_cluster" "cluster" {
-  name = "laflor-eks-b2ZGagy0"
-}
+# data "aws_eks_cluster" "cluster" {
+#   name = "kubernetes-admin@kubernetes"
+# }
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = "laflor-eks-b2ZGagy0"
-}
+# data "aws_eks_cluster_auth" "cluster" {
+#   name = "kubernetes-admin@kubernetes"
+# }
 
 # Namespace
 data "kubectl_file_documents" "namespace" {
