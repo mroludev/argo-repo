@@ -68,9 +68,6 @@ provider "null" {
 }
 
 
-provider "null" {
-  # A null provider does nothing, it is used here to avoid errors related to missing providers.
-}
 
 provider "kubernetes" {
    config_path = file("~/.kube/config")
