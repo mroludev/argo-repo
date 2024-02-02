@@ -26,39 +26,75 @@ resource "kubectl_manifest" "svc" {
 }
 
 # Repo secrets
-resource "kubectl_manifest" "app_repos" {
+resource "kubectl_manifest" "emart_repo" {
   depends_on = [
     kubectl_manifest.svc
   ]
-  for_each           = data.kubectl_file_documents.repos-secret.manifests
+  for_each           = data.kubectl_file_documents.emart-secret.manifests
   yaml_body          = each.value
   override_namespace = "argocd"
 }
 
-resource "kubectl_manifest" "helm_repos" {
-  depends_on = [
-    kubectl_manifest.svc
-  ]
-  for_each           = data.kubectl_file_documents.helm-repos-secret.manifests
-  yaml_body          = each.value
-  override_namespace = "argocd"
-}
+ resource "kubectl_manifest" "micros_repo" {
+   depends_on = [
+     kubectl_manifest.svc
+   ]
+   for_each           = data.kubectl_file_documents.micros-secret.manifests
+   yaml_body          = each.value
+   override_namespace = "argocd"
+ }
+ resource "kubectl_manifest" "wordpress_repo" {
+   depends_on = [
+     kubectl_manifest.svc
+   ]
+   for_each           = data.kubectl_file_documents.wordpress-secret.manifests
+   yaml_body          = each.value
+   override_namespace = "argocd"
+ }
+resource "kubectl_manifest" "mysql_repo" {
+   depends_on = [
+     kubectl_manifest.svc
+   ]
+   for_each           = data.kubectl_file_documents.mysql-secret.manifests
+   yaml_body          = each.value
+   override_namespace = "argocd"
+ }
+
 
 # Repos
-resource "kubectl_manifest" "app_set" {
+resource "kubectl_manifest" "emart" {
   depends_on = [
-    kubectl_manifest.app_repos
+    kubectl_manifest.emart_repo
   ]
-  for_each           = data.kubectl_file_documents.appset.manifests
+  for_each           = data.kubectl_file_documents.emart.manifests
   yaml_body          = each.value
   override_namespace = "argocd"
 }
 
-resource "kubectl_manifest" "helm_set" {
+resource "kubectl_manifest" "micros" {
   depends_on = [
-    kubectl_manifest.helm_repos
+    kubectl_manifest.micros_repo
   ]
-  for_each           = data.kubectl_file_documents.app-set.manifests
+  for_each           = data.kubectl_file_documents.micros.manifests
+  yaml_body          = each.value
+  override_namespace = "argocd"
+}
+
+
+resource "kubectl_manifest" "wordpress" {
+  depends_on = [
+    kubectl_manifest.wordpress_repo
+  ]
+  for_each           = data.kubectl_file_documents.wordpress.manifests
+  yaml_body          = each.value
+  override_namespace = "argocd"
+}
+
+resource "kubectl_manifest" "mysql" {
+  depends_on = [
+    kubectl_manifest.mysql_repo
+  ]
+  for_each           = data.kubectl_file_documents.mysql.manifests
   yaml_body          = each.value
   override_namespace = "argocd"
 }

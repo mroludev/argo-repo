@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wordpress-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/mroludev/wordpress.git # insert the git repo, the only source of truth, must be same with the secret yaml file
+    targetRevision: main
+    path: wordpress        # the folder in the repo that contains the manifests
+    helm: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: wordpress # the app namespace
+
+  syncPolicy:
+    automated: {}
+ 

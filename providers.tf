@@ -12,7 +12,13 @@ terraform {
 }
 
 provider "aws" {
-  region = ""
+  region = "us-west-2"
+  default_tags {
+    tags = {
+      Project = "eks-argoCd"
+      ManagedBy = "terraform"
+    }
+  }
   }
 
 provider "kubernetes" {
@@ -29,9 +35,9 @@ provider "kubectl" {
 }
 
 provider "helm" {
-    host                   = local.host
-    cluster_ca_certificate = local.certificate
-    token                  = local.token
+  host                   = local.host
+  cluster_ca_certificate = local.certificate
+  token                  = local.token
 }
 
 locals {

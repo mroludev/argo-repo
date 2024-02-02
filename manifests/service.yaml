@@ -1,3 +1,4 @@
+# To create the Argo CD service  of type Nodeport
 apiVersion: v1
 kind: Service
 metadata:
@@ -16,4 +17,4 @@ spec:
   selector:
     app.kubernetes.io/name: argocd-server
   sessionAffinity: None
-  type: NodePort
+  type: NodePort  # access through the boswer by port-forward --kubectl port-forward svc/name <port> -n <namespace>

@@ -1,10 +1,10 @@
 # Cluster data
 data "aws_eks_cluster" "cluster" {
-  name = "demo"
+  name = "laflor-eks-b2ZGagy0"
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = "demo"
+  name = "laflor-eks-b2ZGagy0"
 }
 
 # Namespace
@@ -23,19 +23,41 @@ data "kubectl_file_documents" "svc" {
 }
 
 # Repos secrets
-data "kubectl_file_documents" "repos-secret" {
-  content = file("${path.module}/manifests/secret.yaml")
+data "kubectl_file_documents" "emart-secret" {
+  content = file("${path.module}/manifests/secretemart.yaml")
 }
 
-data "kubectl_file_documents" "helm-repos-secret" {
-  content = file("${path.module}/manifests/secret-helm.yaml")
-}
+ data "kubectl_file_documents" "micros-secret" {
+   content = file("${path.module}/manifests/secretmicros.yaml")
+ }
+data "kubectl_file_documents" "wordpress-secret" {
+   content = file("${path.module}/manifests/secretwordpress.yaml")
+ }
+data "kubectl_file_documents" "mysql-secret" {
+   content = file("${path.module}/manifests/secretmysql.yaml")
+ }
 
 # Repos
-data "kubectl_file_documents" "appset" {
-  content = file("${path.module}/manifests/app-set.yaml")
+data "kubectl_file_documents" "emart" {  
+  content = file("${path.module}/manifests/emart.yaml")  # replace with emart
 }
 
-data "kubectl_file_documents" "app-set" {
-  content = file("${path.module}/manifests/app-set-helm.yaml")
+data "kubectl_file_documents" "micros" {
+  content = file("${path.module}/manifests/micros.yaml")  # replace with micros
 }
+
+
+data "kubectl_file_documents" "wordpress" {
+  content = file("${path.module}/manifests/wordpress.yaml")  # replace with micros
+}
+
+data "kubectl_file_documents" "mysql" {
+  content = file("${path.module}/manifests/mysql.yaml")  # replace with micros
+}
+# add the microservice here
+
+# add the emart here
+
+# add the wordpress here
+
+# add the istio here

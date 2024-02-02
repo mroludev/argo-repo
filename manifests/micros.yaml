@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mymicros-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mroludev/micros # insert the git repo, the only source of truth, must be same with the secret yaml file
+    targetRevision: main
+    path: micros           # the folder in the repo that contains the manifests
+    #helm: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: micros # the app namespace
+
+  syncPolicy:
+    automated: {}

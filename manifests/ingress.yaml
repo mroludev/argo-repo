@@ -14,7 +14,7 @@ metadata:
   namespace: argocd
 spec:
   rules:
-  - host: app.everythingdevopstoday.com
+  - host: localhost
     http:
       paths:
       - path: /
@@ -33,4 +33,4 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - app.everythingdevopstoday.com
+    - localhost
