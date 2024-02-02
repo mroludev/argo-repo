@@ -96,7 +96,7 @@ provider "helm" {
 
 
 locals {
-  host        = "https://192.168.64.12:6443"
+  host        = output.kubernetes_master_endpoint.value
   certificate = file("/home/ubuntu/k8scert/ca.crt")
   token       = file("/home/ubuntu/k8scert/token.txt")
   client_key  = file("/home/ubuntu/k8scert/client_key.txt")
@@ -106,4 +106,3 @@ locals {
   decoded_client_key  = base64decode(local.client_key)
   load_config_file       = true
 }
-

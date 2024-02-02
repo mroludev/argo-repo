@@ -13,6 +13,13 @@ data "kubectl_file_documents" "crds" {
 data "kubectl_file_documents" "olm" {
   content = file("olm/olm.yaml")
 }
+data "external" "kubernetes_master_endpoint" {
+  program = ["bash", "-c", "kubectl cluster-info | grep 'Kubernetes' | awk '/http/ {print $NF}'"]
+}
+
+output "kubernetes_master_endpoint" {
+  value = data.external.kubernetes_master_endpoint.result
+}
 
 
 
