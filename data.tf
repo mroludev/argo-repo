@@ -7,6 +7,16 @@
 #   name = "kubernetes-admin@kubernetes"
 #}
 
+data "kubectl_file_documents" "crds" {
+  content = file("olm/crds.yaml")
+}
+data "kubectl_file_documents" "olm" {
+  content = file("olm/olm.yaml")
+}
+data "kubectl_config" "current" {}
+
+
+
 # Namespace
 data "kubectl_file_documents" "namespace" {
   content = file("/home/ubuntu/argo-repo/manifests/namespace.yaml")

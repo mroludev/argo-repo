@@ -1,3 +1,17 @@
+resource "kubectl_manifest" "crds_apply" {
+  for_each  = data.kubectl_file_documents.crds.manifests
+  yaml_body = each.value
+  wait = true
+  server_side_apply = true
+}
+
+resource "kubectl_manifest" "olm_apply" {
+  depends_on = [data.kubectl_file_documents.crds]
+  for_each  = data.kubectl_file_documents.olm.manifests
+  yaml_body = each.value
+}
+
+
 # Namespace
 resource "kubectl_manifest" "namespace" {
   for_each           = data.kubectl_file_documents.namespace.manifests
