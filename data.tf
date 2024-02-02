@@ -13,7 +13,7 @@ data "kubectl_file_documents" "crds" {
 data "kubectl_file_documents" "olm" {
   content = file("olm/olm.yaml")
 }
-data "kubectl_config" "current" {}
+
 
 
 
